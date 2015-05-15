@@ -2,8 +2,8 @@
 <html>
 
 <head>
-<script type="text/javascript" src="../node_modules/bignumber.js/bignumber.min.js"></script>
-<script type="text/javascript" src="../dist/web3-light.js"></script>
+<script type="text/javascript" src="../bower_components/bignumber.js/bignumber.min.js"></script>
+<script type="text/javascript" src="../bower_components/web3/dist/web3-light.js"></script>
 <script type="text/javascript">
    
     var web3 = require('web3');
@@ -16,19 +16,14 @@
         document.getElementById('coinbase').innerText = 'coinbase: ' + coinbase;
         document.getElementById('original').innerText = ' original balance: ' + web3.fromWei(originalBalance, 'finney') + ' finney    watching...';
 	var accounts = web3.eth.accounts;
-        var acc1bal = web3.eth.getBalance(accounts[0]).toNumber();	
-	document.getElementById('acc1').innerText = 'original balance: ' + acc1bal;
-
-        var acc2bal = web3.eth.getBalance(accounts[1]).toNumber();	
-	document.getElementById('acc2').innerText = 'original balance: ' + acc2bal;
-
-	console.log(accounts);
-
+	for(var i=0; i<accounts.length; i++) {
+	    var accbal = web3.eth.getBalance(accounts[i]).toNumber();
+            console.log('Account '+ accounts[i] +':' + web3.fromWei(accbal, 'finney'))
+	}
+        
 	var code_contract = web3.eth.getCode("0x72d9851c9d30d4be103980aa9c652eaf81e8c9e8")
 	document.getElementById('code_contract').innerText = 'Code Contract: ' + code_contract;
 
-
-	
         web3.eth.filter('pending').watch(function() {
             var currentBalance = web3.eth.getBalance(coinbase).toNumber();
             document.getElementById("current").innerText = 'current: ' + currentBalance;
@@ -44,9 +39,6 @@
     <div></div>
     <div id="coinbase"></div>
     <div id="original"></div>
-    <div id="acc1"></div>
-    <div id="acc2"></div>
-    <div id="code_contract"></div>
     <div id="current"></div>
     <div id="diff"></div>
 </body>
