@@ -1,0 +1,11 @@
+*~
+*.pyc
+.idea
+*.log
+*.tar.gz
+*.tgz
+*.gz
+*.tar
+*.pyo
+1/
+2/
