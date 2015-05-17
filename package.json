@@ -1,0 +1,12 @@
+
+{
+  "name": "ethereum_example",
+  "version": "0.0.1",
+  "description": "An example module to illustrate the usage of ethereum",
+  "author": "Ivan Zemtsov <inzem77@gmail.com>",
+  "dependencies": {
+    "web3": "0.4.2"
+  },
+  "license": "MIT"
+}
+  

@@ -2,8 +2,8 @@
 <html>
 
 <head>
-<script type="text/javascript" src="../bower_components/bignumber.js/bignumber.min.js"></script>
-<script type="text/javascript" src="../bower_components/web3/dist/web3-light.js"></script>
+<script type="text/javascript" src="./node_modules/web3/node_modules/bignumber.js/bignumber.js"></script>
+<script type="text/javascript" src="./node_modules/web3/dist/web3-light.js"></script>
 <script type="text/javascript">
    
     var web3 = require('web3');
@@ -22,7 +22,7 @@
 	}
         
 	var code_contract = web3.eth.getCode("0x72d9851c9d30d4be103980aa9c652eaf81e8c9e8")
-	document.getElementById('code_contract').innerText = 'Code Contract: ' + code_contract;
+	console.log("code contract:" + code_contract)
 
         web3.eth.filter('pending').watch(function() {
             var currentBalance = web3.eth.getBalance(coinbase).toNumber();
