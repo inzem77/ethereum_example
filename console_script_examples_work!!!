@@ -1,0 +1,41 @@
+../../go-ethereum/build/bin/geth --networkid 12345 --minerthreads 1  --rpc --unlock primary --rpcaddr "127.0.0.1" --rpcport "8545" --rpccorsdomain '*' --mine
+
+
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x10a6015c70c151aec4e1a3431e7328f863746b42", "latest"],"id":1}' 127.0.0.1:8545
+
+params: [{
+  "from": "0xe714a02fc6d9c8ce72e798f3b0dea703fc781001",
+  "to": "",
+  "gas": "0x0C66A", // 50794,
+  "gasPrice": "0x9184e72a000", // 10000000000000
+  "value": "0x06A94D74FFFFFFF", // 30 Finney
+  "data": "604b80600c6000396000f3006000357c0100000000000000000000000000000000000000000000000000000000900480636d4ce63c14602e57005b6034603e565b8060005260206000f35b6000600a90506048565b9056"
+}]
+
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_sendTransaction","params":[{"from":"0x10a6015c70c151aec4e1a3431e7328f863746b42", "gas": "0x0C66A", "gasPrice": "0x9184e72a000", "value":"0x06A94D74FFFFFFF", "data": "0x604b80600c6000396000f3006000357c0100000000000000000000000000000000000000000000000000000000900480636d4ce63c14602e57005b6034603e565b8060005260206000f35b6000600a90506048565b9056"}],"id":1}' 127.0.0.1:8545
+
+{
+	"id": 1,
+	"jsonrpc": "2.0",
+	"result": "0x23b78d90271c80e95f78c423e16ed2c60df7aa2a"
+}
+
+
+contract SimpleStorage {
+    function get() {
+        return 10;
+    }
+}
+604b80600c6000396000f3006000357c0100000000000000000000000000000000000000000000000000000000900480636d4ce63c14602e57005b6034603e565b8060005260206000f35b6000600a90506048565b9056
+Adress SimpleStorage: 0x55f1ce6c38bf9c0695d0a7dba32d059a71f044cf
+>>> s=sha3_256("get()")
+>>> s.hexdigest()
+'6d4ce63caa65600744ac797760560da39ebd16e8240936b51f53368ef9e0e01f'
+
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_call","params":[{"from":"0x10a6015c70c151aec4e1a3431e7328f863746b42","to":"0x23b78d90271c80e95f78c423e16ed2c60df7aa2a","gas":700000, "gasPrice":90000, "value":30000000000000000, "data":"0x6d4ce63c"},"latest"],"id":1}' http://127.0.0.1:8545
+{
+	"id": 1,
+	"jsonrpc": "2.0",
+	"result": "0x000000000000000000000000000000000000000000000000000000000000000a"
+}
+
